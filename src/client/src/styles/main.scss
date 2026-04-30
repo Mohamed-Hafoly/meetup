@@ -1,0 +1,49 @@
+@use "./reset";
+@use "abstracts" as a;
+// @use "layout/layout";
+// @use "components/header";
+// @use "components/footer";
+// @use "components/home-hero";
+// @use "components/create-meeting-modal";
+// @use "components/invitees-list";
+// @use "components/search-users";
+// @use "components/auth";
+// @use "components/profile";
+// @use "components/about-app";
+// @use "components/about-me";
+// @use "components/error-page";
+// @use "components/meeting";
+
+/* Default (light mode) */
+:root {
+  --color-primary: #434e78 !important;
+  --color-primary-rgb: 67, 78, 120 ;
+  --color-secondary: #ff9292 !important;
+  --color-secondary-rgb: 255, 146, 146;
+  --color-bg-primary: #ffffff;
+  --color-bg-primary-rgb: 255, 255, 255;
+  --color-bg-secondary: #fafafa;
+  --color-bg-secondary-rgb: 250, 250, 250;
+  --color-text: #2d2d2d;
+  --color-text-rgb: 45, 45, 45;
+  --overlay-color-rgb: 0, 0, 0;
+  --color-divider: #434e781a;
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] {
+  --color-primary: #2e2f3a;
+  --color-secondary: #ff6b6b;
+  --color-primary-rgb: 46, 47, 58;
+  --color-secondary-rgb: 255, 107, 107;
+  --color-bg-primary: #2d2d2d;
+  --color-text: #fafafa;
+  --overlay-color-rgb: 255, 255, 255;
+  --color-divider: #ff6b6b;
+}
+
+body {
+  font-family: a.$font-primary;
+  background-color: a.$color-bg-primary;
+  color: a.$color-text;
+}

@@ -1,0 +1,97 @@
+@use "../abstracts/" as a;
+
+.searchField {
+  @include a.flex(column, flex-start, stretch);
+  font-family: "DM Sans", sans-serif;
+}
+
+.inputWrap {
+  position: relative;
+  @include a.flex(row, flex-start, center);
+}
+
+.input {
+  width: 100%;
+  padding: a.$spacing-s 3rem a.$spacing-s 2.5rem;
+  outline: none;
+  border: none;
+  border-radius: a.$radius-xs a.$radius-xs 0 0;
+  background: a.$color-bg-secondary;
+  border-bottom: 2px solid rgba(a.$color-primary-rgb, 1);
+  font-family: "DM Sans", sans-serif;
+  transition: all 0.1s;
+
+  &::placeholder {
+    color: rgba(a.$color-text-rgb, 0.35);
+  }
+
+  &:not(:placeholder-shown) {
+    background: color-mix(in srgb, a.$color-primary 40%, a.$color-bg-primary);
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: color-mix(in srgb, a.$color-primary 40%, a.$color-bg-primary);
+  }
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+}
+
+.clear {
+  @include a.btn(transparent, $padding: a.$spacing-s);
+  @include a.btn-hover-transition($time: 0.1s);
+  outline: none;
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+
+  &:hover,
+  &:focus-visible {
+    background: rgba(a.$color-secondary-rgb, 0.5);
+  }
+}
+
+.dropdown {
+  background: a.$color-bg-secondary;
+  border-radius: 0 0 a.$radius-xs a.$radius-xs;
+  overflow: hidden;
+}
+
+.option {
+  @include a.flex(row, flex-start, center);
+  padding: a.$spacing-s a.$spacing-m;
+  gap: a.$spacing-m;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 1px solid rgba(a.$color-primary-rgb, 0.2);
+
+  &:last-child {
+    border: none;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: rgba(a.$color-primary-rgb, 0.2);
+    border-color: rgba(a.$color-primary-rgb, 1);
+  }
+}
+
+.optionInfo {
+  @include a.flex(column, space-between, flex-start);
+  flex: 1;
+}
+
+.optionEmail {
+  font-size: 0.9rem;
+}
+
+.optionName {
+  color: a.$color-primary-rgb;
+  font-weight: 400;
+  font-size: 0.75rem;
+}

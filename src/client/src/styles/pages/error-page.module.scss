@@ -1,0 +1,25 @@
+@use "../abstracts" as a;
+@use "sass:color";
+
+.errorPage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  @include a.flex(column, center, center);
+  background-color: color-mix(in srgb, a.$color-primary 70%, black);
+  height: 50vh;
+  width: 100vw;
+  gap: a.$spacing-xl;
+
+  h1 {
+    font-size: 5rem;
+    color: a.$color-secondary;
+  }
+
+  p {
+    font-size: 2rem;
+    color: a.$color-bg-primary;
+    font-weight: 500;
+  }
+}

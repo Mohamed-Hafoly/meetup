@@ -1,0 +1,220 @@
+@use "../abstracts" as a;
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap");
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.overlay {
+  @include a.flex();
+  position: fixed;
+  inset: 0;
+  background: rgba(a.$overlay-color-rgb, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal {
+  @include a.flex(column, flex-start, stretch);
+  width: 90vw;
+  max-height: 90dvh;
+  background: a.$color-bg-primary;
+  border-radius: a.$radius-xs;
+  overflow: hidden;
+  animation: slideUp 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  font-family: "DM Sans", sans-serif;
+}
+
+.header {
+  @include a.flex(row, space-between, center);
+  background-color: a.$color-bg-secondary;
+  padding: a.$spacing-m a.$spacing-m a.$spacing-xxs;
+  border-bottom: 1px solid a.$color-divider;
+}
+
+.title {
+  font-size: clamp(1rem, calc(0.5rem + 5vw), 1.5rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.close {
+  @include a.btn(transparent, $padding: a.$spacing-m a.$spacing-xs);
+  &:hover, &:focus-visible {
+    background: rgba(a.$color-primary-rgb, 0.2);
+  }
+}
+
+.form {
+  display: contents;
+}
+
+.body {
+  @include a.flex(column, flex-start, stretch);
+  padding: a.$spacing-xl 5vw;
+  overflow-y: auto;
+  gap: a.$spacing-xl;
+}
+
+
+.titleField {
+  @include a.flex(column, flex-start, stretch);
+}
+
+.label {
+  padding-block-end: a.$spacing-xs;
+}
+
+.inputWrap {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: a.$spacing-s 3rem a.$spacing-s a.$spacing-m;
+  outline: none;
+  border: none;
+  border-radius: a.$radius-xs a.$radius-xs 0 0;
+  background: a.$color-bg-secondary;
+  border-bottom: 1px solid rgba(a.$color-primary-rgb, 0.3);
+  font-family: "DM Sans", sans-serif;
+  transition: all 0.1s;
+  
+  &::placeholder {
+    color: rgba(a.$color-text-rgb, 0.35);
+  }
+  
+  &:hover, &:focus-visible {
+    background: rgba(a.$color-primary-rgb, 0.2);
+  }
+}
+
+.clear {
+  @include a.btn(transparent, $padding: a.$spacing-s);
+  @include a.btn-hover-transition($time: 0.1s);
+  outline: none;
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  
+  &:hover, &:focus-visible {
+    background: rgba(a.$color-secondary-rgb, 0.5);
+  }
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: rgba(a.$color-text-rgb, 0.3);
+  padding: a.$spacing-xs 0 0 a.$spacing-m;
+  font-family: "DM Mono", monospace;
+}
+
+.inviteSection {
+  @include a.flex(column, flex-start, stretch);
+  gap: a.$spacing-l;
+}
+
+.inviteLabel {
+  font-size: clamp(1.5rem, calc(0.9rem + 2vw), 2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.footer {
+  display: grid;
+  grid-template-columns: max-content max-content max-content;
+  align-items: center;
+  padding: a.$spacing-l a.$spacing-xl;
+  gap: a.$spacing-l;
+  border-top: 1px solid a.$color-divider;
+
+  @media (width < a.$breakpoint-mobile) {
+    grid-template-columns: max-content max-content;
+    grid-template-rows: auto auto;
+  }
+}
+
+.btn {
+  @include a.btn($radius: a.$radius-xl, $padding: a.$spacing-s a.$spacing-m);
+  @include a.box-shadow();
+  @include a.btn-hover-transition(transform);
+  font-size: 1.125rem;
+  font-weight: 500;
+  font-family: "DM Sans", sans-serif;
+
+  &:hover, &:focus-visible {
+    filter: brightness(0.9);
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.start {
+  background: a.$color-primary;
+  color: a.$color-bg-secondary;
+
+  &:hover, &:focus-visible {
+    @include a.btn-focus-outline(a.$color-secondary, $width: 3px, $offset: 1px);
+  }
+
+  &:disabled {
+    background-color: rgba(a.$color-primary-rgb, 0.9);
+    color: rgba(a.$color-bg-secondary-rgb, 0.2);
+    cursor: not-allowed;
+    filter: brightness(1);
+    pointer-events: none;
+  }
+
+  svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    fill: a.$color-secondary;
+  }
+}
+
+.cancel {
+  background: a.$color-bg-primary;
+  border: 1px solid a.$color-text;
+
+  &:hover, &:focus-visible {
+    @include a.btn-focus-outline(a.$color-text, $width: 3px, $offset: 0px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: brightness(1);
+    pointer-events: none;
+  }
+}
+
+.error {
+  background-color: color-mix(in srgb, a.$color-primary 70%, black);
+  color: a.$color-secondary;
+  font-weight: 500;
+  padding: a.$spacing-xs;
+  border-radius: 0 a.$radius-s a.$radius-s 0;
+
+  @media (width < a.$breakpoint-mobile) {
+    grid-column: 1 / -1;
+  }
+}

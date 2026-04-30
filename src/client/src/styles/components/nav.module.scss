@@ -1,0 +1,167 @@
+@use "../abstracts" as a;
+
+.overlay {
+  @include a.overlay(0);
+}
+
+.navWrapper {
+  @include a.flex(row, space-between, center);
+  gap: a.$spacing-l;
+}
+
+.linkPrimary,
+.linkSecondary {
+  @include a.btn-hover-transition(transform);
+  transform: scale(1);
+
+  &:focus-visible {
+    @include a.btn-focus-outline();
+  }
+
+  &:hover:not(.active),
+  &:focus-visible:not(.active) {
+    @include a.btn-focus-outline();
+    filter: brightness(0.9);
+    transform: scale(1.1);
+  }
+}
+
+.linkPrimary {
+  @include a.btn(a.$color-primary, a.$color-bg-secondary);
+
+  &.active {
+    transform: scale(1.05);
+    filter: brightness(0.85);
+    border-bottom: 4px solid a.$color-secondary;
+  }
+}
+
+.linkSecondary {
+  @include a.btn(transparent, a.$color-secondary);
+
+  &.active {
+    background-color: rgba(a.$color-primary-rgb, 0.2);
+    border-bottom: 4px solid a.$color-secondary;
+  }
+
+  &:hover:not(.active),
+  &:focus-visible:not(.active) {
+    background-color: rgba(a.$color-primary-rgb, 0.2);
+  }
+}
+
+.hamburger {
+  @include a.btn(transparent, $padding: 0);
+  display: none;
+
+  &.hide {
+    visibility: hidden;
+  }
+}
+
+.divider {
+  display: none;
+  width: 2px;
+  background: a.$color-divider;
+  align-self: stretch;
+}
+
+.nav {
+  position: relative;
+  @include a.flex(row, flex-start, center);
+  gap: a.$spacing-l;
+
+  .divider:last-child {
+    display: block;
+  }
+
+  .closeBtn {
+    @include a.btn(transparent, $padding: a.$spacing-m a.$spacing-xs);
+    display: none;
+    align-self: flex-start;
+  }
+
+  &.open {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+}
+
+@media (width < a.$breakpoint-mobile) {
+  .divider {
+    display: block;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 60vw;
+    height: 100vh;
+    padding: a.$spacing-xxs;
+    gap: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background-color: rgba(a.$color-primary-rgb, 0.97);
+    z-index: 999;
+    font-size: 1.2rem;
+    transform: translateX(100%);
+    transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 0.98);
+    pointer-events: none;
+
+    .divider {
+      display: block;
+      width: 90%;
+      height: 1px;
+      background: a.$color-secondary;
+      align-self: center;
+      margin-bottom: a.$spacing-xl;
+    }
+
+    .closeBtn {
+      display: block;
+      padding-bottom: a.$spacing-xl;
+    }
+
+    .linkPrimary,
+    .linkSecondary {
+      padding-top: a.$spacing-m;
+
+      &.active {
+        outline: none;
+        filter: brightness(0.8);
+        transform: scale(1.04);
+        background-color: rgba(0, 0, 0, 0.4);
+        font-weight: 600;
+        cursor: default;
+        border-bottom: 4px solid a.$color-secondary;
+      }
+
+      &:hover:not(.active),
+      &:focus-visible:not(.active),
+      &:active:not(.active) {
+        outline: none;
+        filter: brightness(0.7);
+        transform: scale(1.03);
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .linkPrimary {
+      background-color: transparent;
+      border-radius: 0;
+      padding-bottom: a.$spacing-xs;
+    }
+
+    .linkSecondary {
+      color: a.$color-bg-secondary;
+      border-radius: 0;
+      padding-bottom: a.$spacing-xs;
+    }
+  }
+}

@@ -1,0 +1,143 @@
+@use "../abstracts" as a;
+
+.authContainer {
+  @include a.flex(column, center, center);
+  padding: a.$spacing-xxl a.$spacing-xl;
+  max-width: 500px;
+  width: 100%;
+  gap: a.$spacing-xl;
+
+  h1 {
+    font-size: clamp(3rem, calc(2rem + 4vw), 4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+
+    span {
+      color: a.$color-secondary;
+    }
+  }
+}
+
+.authError {
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: a.$spacing-s;
+  background-color: color-mix(in srgb, a.$color-primary 70%, black);
+  color: a.$color-secondary;
+  border-radius: 0 0 a.$radius-s a.$radius-s;
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  gap: a.$spacing-xl;
+  width: 100%;
+  max-width: 400px;
+
+  fieldset {
+    display: contents;
+  }
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: a.$spacing-xs;
+
+  label {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  input {
+    @include a.box-shadow();
+    padding: a.$spacing-s a.$spacing-m;
+    border: 2px solid a.$color-text;
+    border-radius: a.$radius-xs;
+    @include a.btn-hover-transition();
+
+    &:hover,
+    &:focus-visible {
+      @include a.btn-focus-outline(a.$color-text, 1px, 0);
+      filter: brightness(0.9);
+    }
+
+    &:invalid:not(:placeholder-shown) {
+      outline: none;
+      border: 3px solid a.$color-secondary;
+      filter: brightness(1);
+    }
+
+    &:valid:not(:placeholder-shown) {
+      filter: brightness(1);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      filter: brightness(1);
+      pointer-events: none;
+    }
+
+    &[type="password"] {
+      color: a.$color-secondary;
+
+      &::placeholder {
+        color: a.$color-secondary;
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+.btnSubmit {
+  position: relative;
+  @include a.btn(
+    a.$color-primary,
+    a.$color-secondary,
+    a.$radius-l,
+    a.$spacing-xs a.$spacing-l
+  );
+  @include a.box-shadow();
+  @include a.btn-hover-transition();
+  align-self: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: a.$spacing-m;
+  text-wrap: nowrap;
+
+  &:hover,
+  &:focus-visible {
+    @include a.btn-focus-outline(a.$color-secondary, $width: 3px, $offset: 1px);
+    filter: brightness(0.9);
+    transform: scale(1.1);
+  }
+
+  &:disabled {
+    background-color: rgba(a.$color-primary-rgb, 0.9);
+    color: rgba(a.$color-secondary-rgb, 0.2);
+    cursor: not-allowed;
+    filter: brightness(1);
+    pointer-events: none;
+  }
+
+  svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    fill: a.$color-secondary;
+  }
+}
+
+.authRedirect {
+  color: a.$color-primary;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+
+  a {
+    color: a.$color-secondary;
+    white-space: nowrap;
+  }
+}

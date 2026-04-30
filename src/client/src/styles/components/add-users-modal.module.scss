@@ -1,0 +1,154 @@
+@use "../abstracts" as a;
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap");
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.overlay {
+  @include a.flex();
+  position: fixed;
+  inset: 0;
+  background: rgba(a.$overlay-color-rgb, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal {
+  @include a.flex(column, space-between, stretch);
+  min-width: 30vw;
+  max-width: 90vw;
+  height: 90dvh;
+  background: #2d2d2d;
+  color: #2d2d2d;
+  border-radius: a.$radius-xs;
+  overflow: hidden;
+  animation: slideUp 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  font-family: "DM Sans", sans-serif;
+}
+
+.header {
+  @include a.flex(row, space-between, center);
+  background-color: rgba(#000, 0.7);
+  padding: a.$spacing-m a.$spacing-m a.$spacing-xxs;
+  border-bottom: 1px solid a.$color-divider;
+  color: a.$color-bg-primary;
+}
+
+.title {
+  font-size: clamp(1rem, calc(0.5rem + 5vw), 1.5rem);
+  font-weight: 500;
+}
+
+.close {
+  @include a.btn(transparent, $padding: a.$spacing-m a.$spacing-xs);
+  &:hover,
+  &:focus-visible {
+    background: rgba(a.$color-secondary-rgb, 0.7);
+  }
+  svg path {
+    fill: a.$color-bg-primary;
+  }
+}
+
+.form {
+  display: contents;
+}
+
+.body {
+  @include a.flex(column, flex-start, stretch);
+  padding: a.$spacing-xl 5vw;
+  overflow-y: auto;
+  gap: a.$spacing-l;
+}
+
+.inviteesList {
+  background: rgba(#000, 0.7);
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: max-content max-content max-content;
+  align-items: center;
+  place-content: center;
+  padding: a.$spacing-l a.$spacing-xl;
+  gap: a.$spacing-l;
+  border-top: 1px solid a.$color-divider;
+
+  @media (width < a.$breakpoint-mobile) {
+    grid-template-columns: max-content max-content;
+    grid-template-rows: auto auto;
+  }
+}
+
+.btn {
+  @include a.btn(
+    a.$color-secondary,
+    a.$color-text,
+    a.$radius-xs,
+    a.$spacing-xs a.$spacing-s
+  );
+  @include a.box-shadow();
+  @include a.btn-hover-transition();
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-family: "DM Sans", sans-serif;
+  letter-spacing: 0.02em;
+
+  &:hover,
+  &:focus-visible {
+    @include a.btn-focus-outline(
+      a.$color-bg-secondary,
+      $width: 3px,
+      $offset: 1px
+    );
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:disabled {
+    background-color: rgba(a.$color-secondary-rgb, 0.8);
+    color: rgba(a.$color-text-rgb, 0.2);
+    cursor: not-allowed;
+    filter: brightness(1);
+    pointer-events: none;
+  }
+  svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    fill: a.$color-primary;
+  }
+}
+
+.error {
+  background-color: rgba(#000, 0.7);
+  color: a.$color-secondary;
+  font-weight: 500;
+  padding: a.$spacing-xxs a.$spacing-xs;
+  border-radius: 0 a.$radius-s a.$radius-s 0;
+
+  @media (width < a.$breakpoint-mobile) {
+    grid-column: 1 / -1;
+  }
+}

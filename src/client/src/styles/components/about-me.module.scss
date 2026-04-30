@@ -1,0 +1,81 @@
+@use "../abstracts" as a;
+
+.about {
+  background: rgba(a.$color-primary-rgb, 0.1);
+  padding: 6vw 8vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "title title"
+    "image text";
+  gap: clamp(3rem, 2rem + 4vw, 3.5rem) a.$spacing-xxl;
+  align-items: center;
+
+  @media (width < a.$breakpoint-tablet) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "image"
+      "text";
+    justify-items: center;
+    padding-block: 15vw 20vw;
+  }
+
+  .title {
+    grid-area: title;
+    font-size: clamp(2rem, calc(0.8rem + 5vw), 4rem);
+    font-weight: 600;
+    margin-block-end: a.$spacing-xxs;
+
+    span {
+      color: a.$color-secondary;
+    }
+  }
+
+  .image {
+    grid-area: image;
+  }
+
+  .text {
+    @include a.flex(column, center, start);
+    grid-area: text;
+    gap: a.$spacing-l;
+
+    @media (width < a.$breakpoint-tablet) {
+      align-items: center;
+    }
+
+    .name {
+      font-size: clamp(1.5rem, calc(1rem + 2vw), 2.25rem);
+      font-weight: 600;
+    //   margin-bottom: 20px;
+
+      span {
+        color: a.$color-secondary;
+      }
+    }
+
+    .bio {
+      font-size: clamp(1rem, calc(0.7rem + 1vw), 1.125rem);
+
+      span {
+        font-size: clamp(1.25rem, calc(0.9rem + 1vw), 1.5rem);
+        font-weight: 700;
+        color: a.$color-secondary;
+      }
+
+      .link {
+        text-wrap: nowrap;
+        color: a.$color-primary;
+        font-weight: 700;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+
+        &:hover {
+            @include a.btn-hover-transition($time:0.1s);
+          color: a.$color-secondary;
+        }
+      }
+    }
+  }
+}

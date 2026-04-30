@@ -1,0 +1,18 @@
+@use "../abstracts" as a;
+
+.header {
+  @include a.flex(row, space-between, center);
+  padding: a.$spacing-m a.$spacing-xl a.$spacing-xs a.$spacing-m;
+  border-bottom: 2px solid a.$color-divider;
+  background-color: a.$color-bg-secondary;
+  position: relative;
+
+  @media (width < a.$breakpoint-mobile) {
+    padding: a.$spacing-m a.$spacing-m a.$spacing-xs;
+  }
+}
+
+.logo {
+  width: clamp(4rem, calc(2rem + 4vw), 6rem);
+  height: auto;
+}

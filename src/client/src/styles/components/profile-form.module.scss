@@ -1,0 +1,211 @@
+@use "../abstracts" as a;
+
+.profileContainer {
+  @include a.flex(column, center, center);
+  padding: a.$spacing-xxl a.$spacing-xl;
+  width: 80vw;
+  width: 100%;
+  gap: a.$spacing-xl;
+
+  header {
+    @include a.flex(column, center, center);
+    gap: a.$spacing-xl;
+    font-size: clamp(2.5rem, calc(1rem + 5svw), 3.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+
+    div {
+      width: clamp(5rem, calc(3rem + 8vw), 8rem);
+      height: auto;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: a.$color-primary;
+
+      p {
+        color: a.$color-secondary;
+        font-size: clamp(3rem, calc(1rem + 7vw), 4rem);
+      }
+    }
+
+    input[name="name"] {
+      font-size: clamp(1.5rem, calc(1rem + 3svw), 2.5rem);
+      font-weight: inherit;
+      letter-spacing: inherit;
+      outline: none;
+      padding-inline: a.$spacing-s;
+      border: none;
+      border-bottom: 2px solid a.$color-secondary;
+      text-align: center;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: inherit;
+      font-weight: inherit;
+      max-width: 30ch;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+
+      @media (max-width: a.$breakpoint-mobile) {
+        max-width: 15ch;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+        overflow-wrap: break-word;
+        hyphens: auto;
+      }
+    }
+  }
+}
+
+.authError {
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: a.$spacing-s;
+  background-color: color-mix(in srgb, a.$color-primary 70%, black);
+  color: a.$color-secondary;
+  border-radius: 0 0 a.$radius-s a.$radius-s;
+}
+
+.profileForm {
+  display: flex;
+  flex-direction: column;
+  gap: a.$spacing-xl;
+  width: 100%;
+  max-width: 400px;
+
+  fieldset {
+    display: contents;
+  }
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: a.$spacing-s;
+
+  label {
+    color: a.$color-primary;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  input {
+    @include a.box-shadow();
+    padding: a.$spacing-s a.$spacing-m;
+    border: 2px solid a.$color-text;
+    border-radius: a.$radius-xs;
+    @include a.btn-hover-transition();
+
+    &:hover,
+    &:focus-visible {
+      @include a.btn-focus-outline(a.$color-text, 1px, 0);
+      filter: brightness(0.9);
+    }
+
+    &:invalid:not(:placeholder-shown) {
+      outline: none;
+      border: 3px solid a.$color-secondary;
+      filter: brightness(1);
+    }
+
+    &:valid:not(:placeholder-shown) {
+      filter: brightness(1);
+    }
+
+    &:disabled {
+      color: a.$color-text;
+      background-color: a.$color-bg-primary;
+      filter: brightness(1);
+    }
+
+    &[type="password"] {
+      color: a.$color-secondary;
+
+      &::placeholder {
+        color: a.$color-secondary;
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+.btnGroup {
+  all: unset;
+  @include a.flex(row, space-around, center);
+  gap: 1rem;
+  margin-top: a.$spacing-xl;
+  width: 100%;
+  max-width: 400px;
+}
+
+.btn {
+  @include a.box-shadow();
+  @include a.btn-hover-transition();
+  align-self: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-wrap: nowrap;
+
+  &:hover,
+  &:focus-visible {
+    filter: brightness(0.9);
+    transform: scale(1.1);
+  }
+}
+
+.action {
+  position: relative;
+  @include a.btn(
+    a.$color-primary,
+    a.$color-secondary,
+    a.$radius-l,
+    a.$spacing-xs a.$spacing-l
+  );
+
+  &:hover,
+  &:focus-visible {
+    @include a.btn-focus-outline(a.$color-secondary, $width: 3px, $offset: 1px);
+  }
+
+  &:disabled {
+    background-color: rgba(a.$color-primary-rgb, 0.9);
+    color: rgba(a.$color-secondary-rgb, 0.2);
+    cursor: not-allowed;
+    filter: brightness(1);
+    pointer-events: none;
+  }
+
+  svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    fill: a.$color-secondary;
+  }
+}
+
+.cancel {
+  @include a.btn(
+    a.$color-bg-primary,
+    a.$color-text,
+    a.$radius-l,
+    a.$spacing-xs a.$spacing-m,
+    1px solid a.$color-text
+  );
+
+  &:hover,
+  &:focus-visible {
+    @include a.btn-focus-outline(a.$color-text, $width: 3px, $offset: 0px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: brightness(1);
+    pointer-events: none;
+  }
+}

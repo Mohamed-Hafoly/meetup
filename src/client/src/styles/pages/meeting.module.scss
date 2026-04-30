@@ -1,0 +1,87 @@
+@use "../abstracts" as a;
+
+.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.meetingContainer {
+  @include a.flex(column, flex-start, stretch);
+  height: 100vh;
+  width: 100%;
+  background-color: a.$color-text;
+}
+
+.meetingHeader {
+  @include a.flex(row, space-between, center);
+  padding-inline: a.$spacing-xl;
+  background-color: #000;
+}
+
+.meetingTitle {
+  background-color: transparent;
+  color: a.$color-secondary;
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.addUserButton {
+  @include a.btn(
+    a.$color-secondary,
+    a.$color-text,
+    50%,
+    a.$spacing-xs
+  );
+
+  img {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+}
+
+
+.meetingSession {
+  flex: 1;
+}
+
+// for hiding the invite button on the uitoolkit's user's popper
+:global(
+  div#uikit-container-app
+    > div
+    > div#zoom-ui-toolkit-users-popper
+    > div
+    > div
+    > div
+    > div.justify-end
+) {
+  display: none;
+}
+
+// .meetingSession > div > div {
+//   overflow-y: visible;
+// }
+
+// .videoWrapper {
+//   width: 50%;
+//   height: 50%;
+//   background-color: aqua;
+// }
+// .video-player-container {
+//   display: block;
+//   width: 100%;
+//   aspect-ratio: 16 / 9;
+//   overflow: hidden;
+//   contain: strict;
+// }
+// .meetingControls {
+//   flex: 2;
+//     @include a.flex(row, space-evenly, center);
+//     padding: a.$spacing-m;
+//   background-color: #000;
+// }
+
+// video {
+//   width: 100%;
+//   aspect-ratio: 16 / 9; /* or 4/3, etc. */
+// }

@@ -1,0 +1,36 @@
+@use "../abstracts" as a;
+
+.footer {
+  @include a.flex(row, space-between, center);
+  padding: a.$spacing-xl a.$spacing-xxl;
+  background-color: a.$color-bg-secondary;
+  color: rgba(a.$color-primary-rgb, 0.55);
+  font-weight: 600;
+  border-top: 2px solid a.$color-divider;
+
+  @media (width < a.$breakpoint-tablet) {
+    padding: a.$spacing-xl a.$spacing-l;
+    font-size: 0.75rem;
+  }
+
+  @media (width < a.$breakpoint-mobile) {
+    flex-direction: column;
+
+    p {
+      align-self: flex-start;
+    }
+  }
+}
+
+.socials {
+  @include a.flex(row, flex-start, center);
+  gap: clamp(a.$spacing-m, 5vw, a.$spacing-l);
+
+  a img {
+    width: clamp(a.$spacing-m, 5vw, a.$spacing-l);
+  }
+
+  @media (width < a.$breakpoint-mobile) {
+    align-self: flex-end;
+  }
+}

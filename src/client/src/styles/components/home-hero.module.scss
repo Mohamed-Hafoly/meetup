@@ -1,0 +1,137 @@
+@use "../abstracts/" as a;
+
+.homeHero {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  padding: 11dvh 8vw 15dvh;
+
+  @media (width < a.$breakpoint-tablet) {
+    grid-template-columns: 1fr;
+    gap: 4.25rem;
+  }
+
+  .content {
+    @include a.flex(column, center, flex-start);
+    gap: 2rem;
+
+    @media (width < a.$breakpoint-tablet) {
+      align-items: center;
+      text-align: center;
+    }
+
+    .heroHeader {
+      @include a.flex(column, flex-start, flex-start);
+      gap: clamp(a.$spacing-m, 1vw, a.$spacing-l);
+
+      @media (width < a.$breakpoint-tablet) {
+        align-items: center;
+      }
+
+      .heading {
+        font-size: clamp(2.625rem, calc(1rem + 5vw), 3.5rem);
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: a.$color-primary;
+
+        span {
+          color: a.$color-secondary;
+          font-style: italic;
+          text-shadow: -4px 7px 4px rgba(#000, 0.25);
+        }
+      }
+
+      .subheading {
+        font-size: clamp(1rem, calc(0.2rem + 3vw), 1.5rem);
+        font-weight: 500;
+        color: rgba(a.$color-primary-rgb, 0.8);
+
+        strong {
+          color: a.$color-secondary;
+          font-size: 1.1em;
+        }
+      }
+    }
+
+    .ctaContainer {
+      @include a.flex(row, center, center);
+      gap: a.$spacing-m;
+
+      
+    @media (width < a.$breakpoint-tablet) {
+        flex-direction: column;
+        gap: a.$spacing-l;
+    }
+
+      .cta {
+        @include a.flex(row, center, center);
+        @include a.box-shadow();
+        @include a.btn(
+          a.$color-primary,
+          a.$color-bg-secondary,
+          $padding: a.$spacing-s a.$spacing-m
+        );
+        @include a.btn-hover-transition(transform);
+        font-size: clamp(1rem, calc(0.1rem + 2vw), 1.125rem);
+        gap: a.$spacing-m;
+        transform: scale(1);
+
+        &:hover,
+        &:focus-visible {
+          @include a.btn-focus-outline(a.$color-secondary, 3px, 0px);
+          filter: brightness(0.9);
+          transform: scale(1.1);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          filter: grayscale(0.5);
+          transform: scale(1);
+
+          &:hover,
+          &:focus-visible {
+            filter: grayscale(0.5);
+            transform: scale(1);
+            outline: none;
+          }
+        }
+      }
+
+      .secondaryCta {
+        font-size: clamp(0.875rem, calc(0.1rem + 1vw), 1rem);
+        background-color: a.$color-secondary;
+        color: a.$color-text;
+        border: 3px solid a.$color-primary;
+        padding-block: a.$spacing-xs;
+
+        &:hover,
+        &:focus-visible {
+          outline-color: a.$color-primary;
+          filter: brightness(1.1);
+        }
+      }
+    }
+  }
+
+  .frame {
+    @include a.flex(column, flex-start, stretch);
+    align-self: center;
+    background: a.$color-bg-primary;
+    overflow: hidden;
+    border-radius: a.$radius-xl;
+    box-shadow:
+      0px 2px 12.8px rgba(#000, 0.05),
+      0px 8px 32px rgba(#000, 0.08);
+
+    .frameImg {
+      margin-bottom: -1px;
+    }
+  }
+}

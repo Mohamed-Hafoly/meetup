@@ -1,0 +1,112 @@
+@use "../abstracts" as a;
+
+.profilePopup {
+  position: relative;
+  display: inline-block;
+}
+
+.avatarBtn {
+  @include a.btn(transparent, $padding: 0);
+  @include a.btn-hover-transition();
+  width: clamp(2rem, calc(1rem + 2.5vw), 3rem);
+  display: block;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  overflow: hidden;
+  transform: scale(1);
+
+  &:hover,
+  &:focus-visible {
+    @include a.btn-focus-outline();
+    transform: scale(1.2);
+  }
+
+  div {
+    width: 100%;
+    height: 100%;
+    background-color: a.$color-primary;
+
+    p {
+      color: a.$color-secondary;
+      font-size: clamp(1.1rem, calc(0.6rem + 1.5vw), 1.6rem);
+    }
+  }
+}
+
+.profileMenu {
+  @include a.flex(column, flex-start, stretch);
+  @include a.box-shadow();
+  opacity: 0;
+  transform: translateY(-8px);
+  position: absolute;
+  top: 120%;
+  right: 15%;
+  width: 10rem;
+  background: a.$color-bg-primary;
+  border-radius: a.$radius-xl;
+  border: 1px solid rgba(a.$color-text-rgb, 0.8);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  z-index: 999;
+
+  &.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  li {
+    @include a.flex(row, flex-start, stretch);
+  }
+}
+
+.profileMenuHeader {
+  @include a.flex(column, flex-start, stretch);
+  padding: a.$spacing-m;
+  border-bottom: 1px solid a.$color-divider;
+  width: 100%;
+}
+
+.name,
+.email {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.name {
+  font-weight: 700;
+}
+
+.email {
+  opacity: 0.5;
+  font-size: 0.75rem;
+}
+
+.profileMenuItem {
+  @include a.flex(row, flex-start, center);
+  @include a.btn(transparent, $radius: 0, $padding: a.$spacing-m);
+  @include a.btn-hover-transition();
+  gap: a.$spacing-m;
+  border-bottom: 1px solid a.$color-divider;
+  transform: scaleY(1);
+  flex: 1;
+
+  &.active {
+    background-color: rgba(a.$color-text-rgb, 0.3);
+    font-weight: 600;
+  }
+
+  &:hover:not(.active),
+  &:focus-visible:not(.active) {
+    @include a.btn-focus-outline($offset: -2px);
+    transform: scaleY(1.05);
+    background-color: rgba(a.$color-primary-rgb, 0.1);
+    font-weight: 600;
+  }
+li:last-child &:hover:not(.active),
+li:last-child &:focus-visible:not(.active) {
+border-radius: 0 0 a.$radius-xl a.$radius-xl;
+}
+}

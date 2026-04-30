@@ -1,0 +1,51 @@
+@use "variables" as v;
+
+//overlay
+@mixin overlay($alpha: 0.2, $z: 20) {
+  position: fixed;
+  inset: 0;
+  background: rgba(v.$overlay-color-rgb, $alpha);
+  z-index: $z;
+}
+
+// Flex center
+@mixin flex($direction: row, $justify: center, $align: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+// Button
+@mixin btn(
+  $bg-color: v.$color-bg-primary,
+  $text-color: v.$color-text,
+  $radius: v.$radius-m,
+  $padding: v.$spacing-xs v.$spacing-m,
+  $border: none
+) {
+  background-color: $bg-color;
+  color: $text-color;
+  padding: $padding;
+  border-radius: $radius;
+  font-weight: 500;
+  cursor: pointer;
+  border: $border;
+  text-decoration: none;
+}
+
+@mixin btn-hover-transition ($properties: all, $time: 0.2s, $easing: ease-in-out, $scale: 1) {
+  transition: $properties $time $easing;
+}
+
+@mixin btn-focus-outline($color: v.$color-primary, $width: 2px, $offset: 1px) {
+  outline: $width solid $color;
+  outline-offset: $offset;
+}
+
+// Box shadow
+@mixin box-shadow() {
+  box-shadow:
+    0px 4px 4px rgba(0, 0, 0, 0.25),
+    4px 4px 4px rgba(0, 0, 0, 0.5);
+}
