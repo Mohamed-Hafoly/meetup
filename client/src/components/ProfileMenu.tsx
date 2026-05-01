@@ -3,7 +3,7 @@ import { useNavigate, NavLink, useRevalidator } from "react-router"
 import Avvvatars from "avvvatars-react"
 import TrapFocus from "./TrapFocus"
 import profileIcon from "../assets/profile.svg"
-import logOutIcon from "../assets/Log-out.svg"
+import logOutIcon from "../assets/log-out.svg"
 import type { User } from "../../types/user"
 import styles from "../styles/components/profile-menu.module.scss"
 
