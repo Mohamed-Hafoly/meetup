@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env APP_URL=https://meetup.local:5173 nodemon server.js",
-    "serve:build": "cross-env SERVE_BUILD=true APP_URL=https://meetup.local:4000 node server.js"
+    "serve": "cross-env NODE_ENV=production APP_URL=https://meetup.local:4000 node server.js"
   },
   "keywords": [],
   "author": "",

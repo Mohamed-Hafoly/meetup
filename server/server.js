@@ -15,8 +15,6 @@ import userRoutes from "./routes/userRoutes.js"
 
 const { PORT = 4000, SESSION_SECRET, NODE_ENV } = process.env
 
-const isProd = NODE_ENV === "production"
-
 const app = express()
 
 const redisClient = createClient({
@@ -33,7 +31,13 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.set("trust proxy", 1)
 
-app.use(cors({ credentials: true }))
+if (NODE_ENV === "development") {
+  app.use(
+    cors({
+      credentials: true,
+    }),
+  )
+}
 
 app.use(
   session({
@@ -46,7 +50,7 @@ app.use(
     cookie: {
       secure: true,
       httpOnly: true,
-      sameSite: isProd ? "none" : "lax",
+      sameSite: NODE_ENV === "production" ? "none" : "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     },
   }),
@@ -56,7 +60,16 @@ app.use("/api/auth", authRoutes)
 app.use("/api/meetings", meetingRoutes)
 app.use("/api/users", userRoutes)
 
-if (isProd || process.env.SERVE_BUILD === "true") {
+if (NODE_ENV === "development") {
+  const sslOptions = {
+    key: fs.readFileSync("../meetup.local+3-key.pem"),
+    cert: fs.readFileSync("../meetup.local+3.pem"),
+  }
+
+  https.createServer(sslOptions, app).listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on https://meetup.local:${PORT}`)
+  })
+} else if (NODE_ENV === "production") {
   const __filename = fileURLToPath(import.meta.url)
   const __dirname = path.dirname(__filename)
 
@@ -67,19 +80,18 @@ if (isProd || process.env.SERVE_BUILD === "true") {
   app.get("*", (req, res) => {
     res.sendFile(path.join(distPath, "index.html"))
   })
-}
 
-if (isProd) {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-  })
-} else {
-  const sslOptions = {
-    key: fs.readFileSync("../meetup.local+3-key.pem"),
-    cert: fs.readFileSync("../meetup.local+3.pem"),
+  if (process.env.APP_URL?.includes("meetup.local")) {
+    const sslOptions = {
+      key: fs.readFileSync("../meetup.local+3-key.pem"),
+      cert: fs.readFileSync("../meetup.local+3.pem"),
+    }
+    https.createServer(sslOptions, app).listen(PORT, () => {
+      console.log(`Server running on https://meetup.local:${PORT}`)
+    })
+  } else {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`)
+    })
   }
-
-  https.createServer(sslOptions, app).listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on https://meetup.local:${PORT}`)
-  })
 }
