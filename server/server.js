@@ -75,8 +75,8 @@ if (isProd) {
   })
 } else {
   const sslOptions = {
-    key: fs.readFileSync("../../meetup.local+3-key.pem"),
-    cert: fs.readFileSync("../../meetup.local+3.pem"),
+    key: fs.readFileSync("../meetup.local+3-key.pem"),
+    cert: fs.readFileSync("../meetup.local+3.pem"),
   }
 
   https.createServer(sslOptions, app).listen(PORT, "0.0.0.0", () => {
