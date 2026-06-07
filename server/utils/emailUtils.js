@@ -394,7 +394,7 @@ export const createEmailInvitations = async ({
   }
 
   try {
-    await transporter.sendMail(emailMessage)
+    // await transporter.sendMail(emailMessage)
     console.log("[createEmailInvitations] Email sent successfully to:", email)
   } catch (error) {
     console.error(

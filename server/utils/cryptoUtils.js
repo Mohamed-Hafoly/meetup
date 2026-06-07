@@ -28,7 +28,7 @@ export function generateAESKey(uid, salt) {
           console.log("[generateAESKey] AES key derived successfully")
           resolve(derivedKey)
         }
-      },
+      }
     )
   })
 }
@@ -37,7 +37,7 @@ export const aesEncrypt = async (sessionName, uid, salt) => {
   try {
     console.log(
       "[aesEncrypt] Starting encryption for sessionName:",
-      sessionName,
+      sessionName
     )
     const derivedKey = await generateAESKey(uid, salt)
 
@@ -47,7 +47,7 @@ export const aesEncrypt = async (sessionName, uid, salt) => {
     let encryptedData = cipher.update(
       JSON.stringify({ sessionName }),
       "utf8",
-      "hex",
+      "hex"
     )
     encryptedData += cipher.final("hex")
     const authTag = cipher.getAuthTag().toString("hex")
