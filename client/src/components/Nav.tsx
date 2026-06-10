@@ -71,7 +71,7 @@ export default function Nav() {
           className={({ isActive }) =>
             `${styles.linkPrimary} ${isActive ? styles.active : ""}`
           }>
-          Sign-in
+          Sign In
         </NavLink>
       )}
       <div className={styles.divider} />

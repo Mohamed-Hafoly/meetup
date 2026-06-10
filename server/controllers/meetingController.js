@@ -30,7 +30,7 @@ export const createMeeting = async (req, res) => {
         meetingSalt,
         createdAt,
         formattedCreatedAt,
-      },
+      }
     )
 
     const meetingDataFirestore = {
@@ -43,7 +43,7 @@ export const createMeeting = async (req, res) => {
     }
     console.log(
       "[createMeeting] Firestore data prepared:",
-      meetingDataFirestore,
+      meetingDataFirestore
     )
 
     const docRef = await defaultDatabase
@@ -52,7 +52,7 @@ export const createMeeting = async (req, res) => {
     const sessionName = docRef.id
     console.log(
       "[createMeeting] Firestore doc created, sessionName:",
-      sessionName,
+      sessionName
     )
 
     const meetingDetails = {
@@ -69,12 +69,12 @@ export const createMeeting = async (req, res) => {
     const invitationData = await sendMeetingInvitations(meetingDetails)
     console.log(
       "[createMeeting] sendMeetingInvitations result:",
-      invitationData,
+      invitationData
     )
 
     if (!invitationData.success) {
       console.log(
-        "[createMeeting] Invitations failed, rolling back Firestore doc...",
+        "[createMeeting] Invitations failed, rolling back Firestore doc..."
       )
       await docRef.delete()
       throw new Error(invitationData.message || "Failed to send invitations")
@@ -90,18 +90,18 @@ export const createMeeting = async (req, res) => {
       await req.session.save()
       console.log(
         "[createMeeting] Host meeting saved to session:",
-        req.session.hostMeeting,
+        req.session.hostMeeting
       )
     } catch (error) {
       console.error(
         "[createMeeting] Unable to save host meeting data to session:",
-        error,
+        error
       )
     }
 
     console.log(
       "[createMeeting] Meeting created successfully, responding with id:",
-      sessionName,
+      sessionName
     )
     res.status(200).json({ id: sessionName })
   } catch (error) {
@@ -128,16 +128,11 @@ export const participantJoin = async (req, res) => {
     console.log("[participantJoin] Invite doc exists:", inviteDoc.exists)
 
     if (!inviteDoc.exists) {
-      return res.status(400).json({ message: "Invalid invitation code" })
+      return res.status(404).json({ message: "No meeting found" })
     }
 
     const inviteData = inviteDoc.data()
     const token = inviteData.token
-
-    // // 2. Check if invite has expired (if you store expiration)
-    // if (inviteData.expiresAt && inviteData.expiresAt.toDate() < new Date()) {
-    //   return res.status(410).json({ message: "Invitation link has expired" })
-    // }
 
     let encryptedData, role, meetingSalt, sessionName
 
@@ -150,6 +145,7 @@ export const participantJoin = async (req, res) => {
       })
     } catch (error) {
       console.log("[participantJoin] Error verifying JWT:", error)
+      return res.status(404).json({ message: "No meeting found" })
     }
 
     try {
@@ -162,13 +158,14 @@ export const participantJoin = async (req, res) => {
       console.log("[participantJoin] Decrypted sessionName:", sessionName)
     } catch (error) {
       console.log("[participantJoin] Error decrypting data:", error)
+      return res.status(404).json({ message: "No meeting found" })
     }
 
     const meetingRef = defaultDatabase.collection("meetings").doc(sessionName)
     const meetingDoc = await meetingRef.get()
 
     if (!meetingDoc.exists) {
-      return res.status(410).json({ message: "This meeting no longer exists" })
+      return res.status(404).json({ message: "No meeting found" })
     }
 
     const meetingData = meetingDoc.data()
@@ -226,7 +223,7 @@ export const hostJoin = async (req, res) => {
       sessionName,
       title,
       signature,
-      participants
+      participants,
     })
 
     res.json({
@@ -234,7 +231,7 @@ export const hostJoin = async (req, res) => {
       sessionName,
       title,
       signature,
-      participants
+      participants,
     })
   } catch (error) {
     console.error("[hostJoin] Unexpected error:", error)
@@ -302,7 +299,7 @@ export const sendInvites = async (req, res) => {
     req.session.hostMeeting.participants = updatedParticipants
     console.log(
       "[addUsers] Session updated with new participants:",
-      updatedParticipants,
+      updatedParticipants
     )
 
     return res.status(200).json({ success: true })
@@ -333,7 +330,7 @@ export const deleteMeeting = async (req, res) => {
     if (meetingData.host !== req.session.user.email) {
       console.log(
         "[deleteMeeting] Unauthorized delete attempt by:",
-        req.session.user.email,
+        req.session.user.email
       )
       return res.status(403).json({ message: "Unauthorized" })
     }

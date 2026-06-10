@@ -50,7 +50,7 @@
       cookie: {
         secure: true,
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: "lax",  
         maxAge: 7 * 24 * 60 * 60 * 1000,
       },
     })
