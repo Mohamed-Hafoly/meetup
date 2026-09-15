@@ -58,6 +58,9 @@ And the meeting record itself:
 The long random string is the value the encryption is built on — stored in plain sight, because on
 its own it unlocks nothing.
 
+Neither record sticks around: both collections have a time-to-live policy that deletes meetings and
+invitations 24 hours after they're created.
+
 The encryption is AES-256-GCM, with a key derived from the recipient's account id and a random
 value unique to each meeting. No password is involved, and no line of code anywhere asks "is this
 the right person?" — a forwarded link simply produces the wrong key and fails to decrypt.
