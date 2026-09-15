@@ -1,7 +1,6 @@
 import { KJUR } from "jsrsasign"
 import { v4 as uuidv4 } from "uuid"
 import { admin, defaultDatabase } from "../utils/firebaseAdmin.js"
-import e from "express"
 
 const { JWT_SECRET_KEY, APP_URL } = process.env
 
